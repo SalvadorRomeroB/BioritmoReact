@@ -28,7 +28,9 @@ const Signin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = () => {
+  const handleLogin = e => {
+    e.preventDefault();
+
     axios
       .post("/users/signin", {
         email: email,
@@ -78,10 +80,11 @@ const Signin = () => {
 
           <Grid item xs={12}>
             <Button
+              disabled={(email && password) !== "" ? false : true}
               variant="outlined"
               size="large"
               className={classes.formButton}
-              onClick={() => handleLogin()}
+              onClick={e => handleLogin(e)}
             >
               Login
             </Button>
