@@ -36,6 +36,7 @@ const Signin = () => {
       })
       .then(function(response) {
         console.log(response);
+        localStorage.setItem("jwt", response.data.token);
       })
       .catch(function(error) {
         console.log(error);
