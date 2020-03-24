@@ -221,7 +221,7 @@ const Home = () => {
 
   const classes = useStyles();
   return (
-    <Layout>
+    <Layout title="Home">
       <h1>Home</h1>
       <Button
         variant="outlined"

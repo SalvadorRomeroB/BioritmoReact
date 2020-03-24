@@ -1,13 +1,16 @@
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
-import IconButton from "@material-ui/core/IconButton";
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  IconButton,
+  MenuItem,
+  Menu
+} from "@material-ui/core";
 import AccountCircle from "@material-ui/icons/AccountCircle";
-import MenuItem from "@material-ui/core/MenuItem";
-import Menu from "@material-ui/core/Menu";
 import { Link } from "react-router-dom";
+
 import Colors from "../constants/Colors";
 
 const useStyles = makeStyles(theme => ({
@@ -65,6 +68,9 @@ const Navbar = () => {
           >
             <MenuItem onClick={handleClose}>
               <Link to="/signin">Signin</Link>
+            </MenuItem>
+            <MenuItem onClick={handleClose}>
+              <Link to="/profile">Profile</Link>
             </MenuItem>
             {/* <MenuItem onClick={handleClose}>My account</MenuItem> */}
           </Menu>
