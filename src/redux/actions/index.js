@@ -32,3 +32,10 @@ export const post_new_event = events => {
     data: events
   };
 };
+
+export const get_created_events = events => {
+  return {
+    type: "CREATED_EVENTS",
+    data: events
+  };
+};

@@ -8,7 +8,8 @@ import {
   get_all_events,
   get_my_events,
   put_new_user,
-  sign_in
+  sign_in,
+  get_created_events
 } from "../redux/actions/index";
 
 import Layout from "../components/Layout";
@@ -171,6 +172,53 @@ const Home = () => {
       });
   };
 
+  const created_events = () => {
+    axios
+      .get(`/user/businesses/owner/${user.id}`, {
+        headers: {
+          Authorization: "Bearer " + token
+        }
+      })
+      .then(function(response) {
+        dispatch(get_created_events(response.data.data));
+        console.log(response.data);
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+  };
+
+  const update_created_events = () => {
+    let event_id = 15;
+    let info_new_event = {
+      business: {
+        name: "new event2",
+        description: "something important",
+        tag: "EMOCIONAL",
+        location: "my otra casa",
+        year: 1998,
+        month: 2,
+        day: 22,
+        owner: 8
+      }
+    };
+    axios({
+      method: "put",
+      url: `/businesses/${event_id}`,
+      headers: {
+        Authorization: "Bearer " + token
+      },
+      data: info_new_event
+    })
+      .then(function(response) {
+        console.log(response.data);
+        created_events();
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+  };
+
   const classes = useStyles();
   return (
     <Layout>
@@ -230,6 +278,22 @@ const Home = () => {
         onClick={() => new_user()}
       >
         Create New User
+      </Button>
+      <Button
+        variant="outlined"
+        size="large"
+        className={classes.formButton}
+        onClick={() => created_events()}
+      >
+        Events created by User
+      </Button>
+      <Button
+        variant="outlined"
+        size="large"
+        className={classes.formButton}
+        onClick={() => update_created_events()}
+      >
+        Update created event
       </Button>
     </Layout>
   );
