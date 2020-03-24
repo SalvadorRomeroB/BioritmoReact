@@ -30,7 +30,7 @@ const Home = () => {
   const [token, setToken] = React.useState(localStorage.getItem("jwt") || "");
   const classes = useStyles();
   return (
-    <Layout>
+    <Layout title="Home">
       <h1>Home</h1>
       <p>Token {token}</p>
       <Button
