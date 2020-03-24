@@ -3,6 +3,8 @@ import { Container, Typography, TextField, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { sign_in } from "../redux/actions/index";
 
 import Layout from "../components/Layout";
 import Colors from "../constants/Colors";
@@ -25,6 +27,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Signin = () => {
+  const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -37,7 +40,7 @@ const Signin = () => {
         password: password
       })
       .then(function(response) {
-        console.log(response);
+        dispatch(sign_in(response.data));
         localStorage.setItem("jwt", response.data.token);
       })
       .catch(function(error) {

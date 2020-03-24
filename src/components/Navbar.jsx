@@ -7,7 +7,7 @@ import IconButton from "@material-ui/core/IconButton";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
-import { Link } from "@material-ui/core";
+import { Link } from "react-router-dom";
 import Colors from "../constants/Colors";
 
 const useStyles = makeStyles(theme => ({
@@ -37,7 +37,7 @@ const Navbar = () => {
       <AppBar position="static" className={classes.navbar}>
         <Toolbar>
           <Typography variant="h5" className={classes.title}>
-            <Link href="/">Biorithm</Link>
+            <Link to="/">Biorithm</Link>
           </Typography>
           <IconButton
             aria-label="account of current user"
@@ -64,7 +64,7 @@ const Navbar = () => {
             onClose={handleClose}
           >
             <MenuItem onClick={handleClose}>
-              <Link href="/signin">Signin</Link>
+              <Link to="/signin">Signin</Link>
             </MenuItem>
             {/* <MenuItem onClick={handleClose}>My account</MenuItem> */}
           </Menu>
