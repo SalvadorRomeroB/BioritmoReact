@@ -19,7 +19,6 @@ export const update_user = async (token, id) => {
     },
     data: info_new_user
   });
-  console.log(response.data);
   return response;
 };
 

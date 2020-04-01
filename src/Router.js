@@ -6,6 +6,7 @@ import Signin from "./pages/Signin";
 import Profile from "./pages/Profile";
 import All_Events from "./pages/All_events";
 import My_Events from "./pages/My_events";
+import Created_Events from "./pages/Created_events";
 
 const Routes = () => {
   return (
@@ -16,6 +17,7 @@ const Routes = () => {
         <Route path="/profile" exact component={Profile} />
         <Route path="/all-events" exact component={All_Events} />
         <Route path="/my-events" exact component={My_Events} />
+        <Route path="/created-events" exact component={Created_Events} />
       </Switch>
     </BrowserRouter>
   );

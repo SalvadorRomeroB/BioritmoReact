@@ -64,6 +64,11 @@ const Navbar = () => {
               My Events
             </Link>
           </Typography>
+          <Typography variant="h5" className={classes.title}>
+            <Link className={classes.noline} to="/created-events">
+              Created Events
+            </Link>
+          </Typography>
           <IconButton
             aria-label="account of current user"
             aria-controls="menu-appbar"

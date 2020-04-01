@@ -62,7 +62,6 @@ export const created_events = async (token, id) => {
     }
   });
 
-  console.log(data);
   return data;
 };
 
@@ -89,6 +88,5 @@ export const update_created_events = async token => {
     },
     data: info_new_event
   });
-  console.log(putData);
   return putData;
 };
