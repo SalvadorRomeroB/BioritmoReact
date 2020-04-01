@@ -38,6 +38,24 @@ export const bio_intelectual = (date_user, date_event) => {
   ).toFixed(2);
 };
 
+export const get_bio_fisico = (year, month, day, usrM, usrD, usrY) => {
+  let date_event = new Date(`${month}/${day}/${year}`);
+  let date_user = new Date(`${usrM}/${usrD}/${usrY}`);
+  return bio_fisico(date_user, date_event);
+};
+
+export const get_bio_emocional = (year, month, day, usrM, usrD, usrY) => {
+  let date_event = new Date(`${month}/${day}/${year}`);
+  let date_user = new Date(`${usrM}/${usrD}/${usrY}`);
+  return bio_emocional(date_user, date_event);
+};
+
+export const get_bio_intelectual = (year, month, day, usrM, usrD, usrY) => {
+  let date_event = new Date(`${month}/${day}/${year}`);
+  let date_user = new Date(`${usrM}/${usrD}/${usrY}`);
+  return bio_intelectual(date_user, date_event);
+};
+
 // Make array for dates in one week
 export const setDateRange = () => {
   let newdate;

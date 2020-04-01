@@ -1,11 +1,11 @@
 const user = (
   state = {
-    day: 22,
-    email: "user5@business.com",
-    id: 8,
-    month: 4,
-    user_name: "Jaquez",
-    year: 1998
+    day: 4,
+    email: "salva@hotmail.com",
+    id: 9,
+    month: 8,
+    user_name: "Salva",
+    year: 1997
   },
   action
 ) => {

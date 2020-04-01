@@ -13,14 +13,19 @@ import { Link } from "react-router-dom";
 
 import Colors from "../constants/Colors";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles({
   title: {
-    flexGrow: 1
+    flexGrow: 1,
+    textDecoration: "none"
   },
   navbar: {
     backgroundColor: Colors.primary
+  },
+  noline: {
+    textDecoration: "none",
+    color: Colors.white
   }
-}));
+});
 
 const Navbar = () => {
   const classes = useStyles();
@@ -35,12 +40,29 @@ const Navbar = () => {
     setAnchorEl(null);
   };
 
+  const handleLogOut = () => {
+    localStorage.removeItem("jwt");
+    handleClose();
+  };
+
   return (
     <div className={classes.root}>
       <AppBar position="static" className={classes.navbar}>
         <Toolbar>
           <Typography variant="h5" className={classes.title}>
-            <Link to="/">Biorithm</Link>
+            <Link className={classes.noline} to="/">
+              Biorithm
+            </Link>
+          </Typography>
+          <Typography variant="h5" className={classes.title}>
+            <Link className={classes.noline} to="/all-events">
+              All Events
+            </Link>
+          </Typography>
+          <Typography variant="h5" className={classes.title}>
+            <Link className={classes.noline} to="/my-events">
+              My Events
+            </Link>
           </Typography>
           <IconButton
             aria-label="account of current user"
@@ -71,6 +93,9 @@ const Navbar = () => {
             </MenuItem>
             <MenuItem onClick={handleClose}>
               <Link to="/profile">Profile</Link>
+            </MenuItem>
+            <MenuItem onClick={handleLogOut}>
+              <Link to="/signin">Logout</Link>
             </MenuItem>
             {/* <MenuItem onClick={handleClose}>My account</MenuItem> */}
           </Menu>
