@@ -77,3 +77,10 @@ export const get_created_events = (token, id) => {
     }
   };
 };
+
+export const select_event = event => {
+  return {
+    type: "SELECT_EVENT",
+    data: event
+  };
+};

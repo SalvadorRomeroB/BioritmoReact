@@ -56,19 +56,9 @@ export const created_events = async (token, id) => {
   return data;
 };
 
-export const update_created_events = async token => {
-  let event_id = 27;
+export const update_created_events = async (token, event_id, event) => {
   let info_new_event = {
-    business: {
-      name: "Worked",
-      description: "something important",
-      tag: "EMOCIONAL",
-      location: "my otra casa",
-      year: 1998,
-      month: 2,
-      day: 22,
-      owner: 9
-    }
+    business: event
   };
 
   const putData = await axios({

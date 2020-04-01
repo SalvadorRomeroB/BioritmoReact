@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from "react-redux";
-import { get_created_events } from "../redux/actions/index";
+import { get_created_events, select_event } from "../redux/actions/index";
 import {
   get_bio_fisico,
   get_bio_emocional,
@@ -26,6 +26,11 @@ const Created_events = () => {
   useEffect(() => {
     dispatch(get_created_events(token, user.id));
   }, [dispatch]);
+
+  const add_event_to_my_events = (e, event) => {
+    e.preventDefault();
+    dispatch(select_event(event));
+  };
 
   const classes = useStyles();
   return (
@@ -74,6 +79,14 @@ const Created_events = () => {
               )}
             </p>
           </div>
+          <Button
+            variant="outlined"
+            size="large"
+            className={classes.formButton}
+            onClick={e => add_event_to_my_events(e, event)}
+          >
+            Edit Event
+          </Button>
         </div>
       ))}
     </Layout>

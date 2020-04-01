@@ -8,6 +8,7 @@ import All_Events from "./pages/All_events";
 import My_Events from "./pages/My_events";
 import Created_Events from "./pages/Created_events";
 import Create_Event from "./pages/Create_event";
+import Edit_Event from "./pages/Update_event";
 
 const Routes = () => {
   return (
@@ -20,6 +21,7 @@ const Routes = () => {
         <Route path="/my-events" exact component={My_Events} />
         <Route path="/created-events" exact component={Created_Events} />
         <Route path="/new-event" exact component={Create_Event} />
+        <Route path="/edit-event" exact component={Edit_Event} />
       </Switch>
     </BrowserRouter>
   );
