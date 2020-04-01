@@ -33,20 +33,7 @@ const Signin = () => {
 
   const handleLogin = e => {
     e.preventDefault();
-
-    axios
-      .post("/users/signin", {
-        email: email,
-        password: password
-      })
-      .then(function(response) {
-        dispatch(sign_in(response.data));
-        localStorage.setItem("jwt", response.data.token);
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
-
+    dispatch(sign_in(email, password));
     setEmail("");
     setPassword("");
   };
