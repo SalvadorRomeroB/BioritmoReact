@@ -1,31 +1,38 @@
-export const date_diff_indays = dt2 => {
-  let dt1 = new Date("08/04/1997"); // 'month/day/year'
+export const date_diff_indays = (date_user, date_event) => {
   return Math.floor(
-    (Date.UTC(dt2.getFullYear(), dt2.getMonth(), dt2.getDate()) -
-      Date.UTC(dt1.getFullYear(), dt1.getMonth(), dt1.getDate())) /
+    (Date.UTC(
+      date_event.getFullYear(),
+      date_event.getMonth(),
+      date_event.getDate()
+    ) -
+      Date.UTC(
+        date_user.getFullYear(),
+        date_user.getMonth(),
+        date_user.getDate()
+      )) /
       (1000 * 60 * 60 * 24)
   );
 };
 
 //Caulculate Physical Biorythm
-export const bio_fisico = dt2 => {
-  let dias_transcurridos = date_diff_indays(dt2);
+export const bio_fisico = (date_user, date_event) => {
+  let dias_transcurridos = date_diff_indays(date_user, date_event);
   return Math.round(
     Math.sin((2 * Math.PI * dias_transcurridos) / 23) * 100
   ).toFixed(2);
 };
 
 //Caulculate Emotional Biorythm
-export const bio_emocional = dt2 => {
-  let dias_transcurridos = date_diff_indays(dt2);
+export const bio_emocional = (date_user, date_event) => {
+  let dias_transcurridos = date_diff_indays(date_user, date_event);
   return Math.round(
     Math.sin((2 * Math.PI * dias_transcurridos) / 28) * 100
   ).toFixed(2);
 };
 
 //Caulculate Intellectual Biorythm
-export const bio_intelectual = dt2 => {
-  let dias_transcurridos = date_diff_indays(dt2);
+export const bio_intelectual = (date_user, date_event) => {
+  let dias_transcurridos = date_diff_indays(date_user, date_event);
   return Math.round(
     Math.sin((2 * Math.PI * dias_transcurridos) / 33) * 100
   ).toFixed(2);
