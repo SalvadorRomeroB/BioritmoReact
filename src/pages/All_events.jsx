@@ -9,6 +9,7 @@ import {
   get_bio_emocional,
   get_bio_intelectual
 } from "../components/BiorythmCalc";
+import { add_my_events } from "../components/API_Req/eventsApi";
 
 import Layout from "../components/Layout";
 
@@ -27,6 +28,11 @@ const All_events = () => {
   useEffect(() => {
     dispatch(get_all_events(token));
   }, [dispatch]);
+
+  const add_event_to_my_events = (e, event_id) => {
+    e.preventDefault();
+    add_my_events(token, user.id, event_id);
+  };
 
   const classes = useStyles();
   return (
@@ -76,6 +82,14 @@ const All_events = () => {
               )}
             </p>
           </div>
+          <Button
+            variant="outlined"
+            size="large"
+            className={classes.formButton}
+            onClick={e => add_event_to_my_events(e, event.id)}
+          >
+            Add to my events
+          </Button>
         </div>
       ))}
     </Layout>
