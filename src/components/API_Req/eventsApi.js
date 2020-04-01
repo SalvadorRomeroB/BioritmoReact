@@ -20,18 +20,9 @@ export const my_events = async (token, id) => {
   return data;
 };
 
-export const new_event = async (token, id) => {
+export const new_event = async (token, id, event) => {
   let new_event = {
-    business: {
-      name: "event with user",
-      description: "something important",
-      tag: "FISICO",
-      location: "my casa",
-      year: 2020,
-      month: 12,
-      day: 31,
-      owner: 9
-    }
+    business: event
   };
   const postData = await axios({
     method: "post",
