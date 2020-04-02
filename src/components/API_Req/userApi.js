@@ -1,15 +1,8 @@
 import axios from "axios";
 
-export const update_user = async (token, id) => {
+export const update_user = async (token, id, info_user) => {
   let info_new_user = {
-    user: {
-      email: "a@gmail.com",
-      password: "password",
-      user_name: "Juan",
-      year: 1998,
-      month: 4,
-      day: 22
-    }
+    user: info_user
   };
   const response = await axios({
     method: "put",
