@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import Colors from "../constants/Colors";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { put_new_user, get_created_events } from "../redux/actions/index";
+import FileBase64 from "react-file-base64";
 
 import Layout from "../components/Layout";
 import {
@@ -35,12 +36,20 @@ const Home = () => {
   const dispatch = useDispatch();
   const [token] = React.useState(localStorage.getItem("jwt") || "");
   let user = useSelector(state => state.user);
+  const [image, setImage] = useState("");
 
   const classes = useStyles();
+
+  const getFiles = file => {
+    console.log(file);
+    file.base64.replace("data:image/png;base64,", "");
+    setImage(file.base64.replace("data:image/png;base64,", ""));
+  };
   return (
     <Layout title="Home">
       <h1>Home</h1>
-
+      <img src={`data:image/jpeg;base64,${image}`} />
+      <FileBase64 onDone={getFiles.bind(this)} />
       <Button
         variant="outlined"
         size="large"

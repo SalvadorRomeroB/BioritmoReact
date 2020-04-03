@@ -8,6 +8,7 @@ import { register_user } from "../redux/actions/index";
 
 import Layout from "../components/Layout";
 import Colors from "../constants/Colors";
+import FileBase64 from "react-file-base64";
 
 const useStyles = makeStyles(theme => ({
   title: {
@@ -34,6 +35,7 @@ const Signin = () => {
   const [year, setYear] = useState(0);
   const [month, setMonth] = useState(0);
   const [day, setDay] = useState(0);
+  const [image, setImage] = useState("");
 
   const handleLogin = e => {
     e.preventDefault();
@@ -43,7 +45,8 @@ const Signin = () => {
       user_name: userName,
       year: year,
       month: month,
-      day: day
+      day: day,
+      image: image
     };
     dispatch(register_user(info_user));
     setEmail("");
@@ -52,6 +55,10 @@ const Signin = () => {
     setYear(0);
     setMonth(0);
     setDay(0);
+  };
+
+  const getFiles = file => {
+    setImage(file.base64.replace("data:image/png;base64,", ""));
   };
 
   const classes = useStyles();
@@ -130,6 +137,7 @@ const Signin = () => {
               onChange={e => setDay(e.target.value)}
             />
           </Grid>
+          <FileBase64 onDone={getFiles.bind(this)} />
           <Grid item xs={12}>
             <Button
               disabled={

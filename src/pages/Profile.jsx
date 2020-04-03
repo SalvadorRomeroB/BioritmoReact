@@ -255,6 +255,7 @@ const Profile = () => {
       >
         Save User
       </Button>
+      <img src={`data:image/jpeg;base64,${user.image}`} />
     </Layout>
   );
 };
