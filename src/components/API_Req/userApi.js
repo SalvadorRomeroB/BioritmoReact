@@ -1,15 +1,8 @@
 import axios from "axios";
 
-export const update_user = async (token, id) => {
+export const update_user = async (token, id, info_user) => {
   let info_new_user = {
-    user: {
-      email: "a@gmail.com",
-      password: "password",
-      user_name: "Juan",
-      year: 1998,
-      month: 4,
-      day: 22
-    }
+    user: info_user
   };
   const response = await axios({
     method: "put",
@@ -19,20 +12,12 @@ export const update_user = async (token, id) => {
     },
     data: info_new_user
   });
-  console.log(response.data);
   return response;
 };
 
-export const new_user = async () => {
+export const new_user = async info_user => {
   let info_new_user = {
-    user: {
-      email: "u@business.com",
-      password: "password",
-      user_name: "Luis",
-      year: 1998,
-      month: 4,
-      day: 22
-    }
+    user: info_user
   };
 
   const response = await axios({

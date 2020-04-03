@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { get_all_events } from "../redux/actions/index";
+import { get_created_events, select_event } from "../redux/actions/index";
 import {
   get_bio_fisico,
   get_bio_emocional,
   get_bio_intelectual
 } from "../components/BiorythmCalc";
-import { add_my_events } from "../components/API_Req/eventsApi";
 
 import Layout from "../components/Layout";
 
@@ -19,26 +17,25 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const All_events = () => {
+const Created_events = () => {
   const dispatch = useDispatch();
-  const [token] = useState(localStorage.getItem("jwt") || "");
+  const [token] = React.useState(localStorage.getItem("jwt") || "");
   let user = useSelector(state => state.user);
-  let eventsList = useSelector(state => state.all_events);
+  let eventsList = useSelector(state => state.created_events);
 
   useEffect(() => {
-    dispatch(get_all_events(token));
+    dispatch(get_created_events(token, user.id));
   }, [dispatch]);
 
-  const add_event_to_my_events = (e, event_id) => {
+  const add_event_to_my_events = (e, event) => {
     e.preventDefault();
-    add_my_events(token, user.id, event_id);
+    dispatch(select_event(event));
   };
 
   const classes = useStyles();
   return (
     <Layout title="Home">
-      <h1>All Events</h1>
-
+      <h1>Created Events</h1>
       {eventsList.map((event, i) => (
         <div key={i} className={classes.event}>
           <div>
@@ -86,9 +83,9 @@ const All_events = () => {
             variant="outlined"
             size="large"
             className={classes.formButton}
-            onClick={e => add_event_to_my_events(e, event.id)}
+            onClick={e => add_event_to_my_events(e, event)}
           >
-            Add to my events
+            Edit Event
           </Button>
         </div>
       ))}
@@ -96,4 +93,4 @@ const All_events = () => {
   );
 };
 
-export default All_events;
+export default Created_events;

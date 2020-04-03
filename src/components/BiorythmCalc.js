@@ -76,13 +76,15 @@ export const setDateRange = () => {
 };
 
 // Make array to pass to chart
-export const makeBioList = biorythm => {
+export const makeBioList = (biorythm, user) => {
   let list = [];
+
+  let date_user = new Date(`${user.month}/${user.day}/${user.year}`);
 
   for (let i = -1; i < 7; i++) {
     let dateObj = new Date();
     dateObj.setDate(dateObj.getDate() + i);
-    list.push(biorythm(dateObj));
+    list.push(biorythm(dateObj, date_user));
   }
   return list;
 };

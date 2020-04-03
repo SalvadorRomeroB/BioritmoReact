@@ -64,6 +64,21 @@ const Navbar = () => {
               My Events
             </Link>
           </Typography>
+          <Typography variant="h5" className={classes.title}>
+            <Link className={classes.noline} to="/created-events">
+              Created Events
+            </Link>
+          </Typography>
+          <Typography variant="h5" className={classes.title}>
+            <Link className={classes.noline} to="/edit-event">
+              Edit Event
+            </Link>
+          </Typography>
+          <Typography variant="h5" className={classes.title}>
+            <Link className={classes.noline} to="/new-event">
+              Create Event
+            </Link>
+          </Typography>
           <IconButton
             aria-label="account of current user"
             aria-controls="menu-appbar"
@@ -90,6 +105,9 @@ const Navbar = () => {
           >
             <MenuItem onClick={handleClose}>
               <Link to="/signin">Signin</Link>
+            </MenuItem>
+            <MenuItem onClick={handleClose}>
+              <Link to="/register">Register</Link>
             </MenuItem>
             <MenuItem onClick={handleClose}>
               <Link to="/profile">Profile</Link>
