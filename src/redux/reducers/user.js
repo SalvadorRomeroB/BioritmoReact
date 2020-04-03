@@ -28,6 +28,15 @@ const user = (
         user_name: action.data.user_name,
         year: action.data.year
       };
+    case "REGISTER_USER":
+      return {
+        day: action.data.day,
+        email: action.data.email,
+        id: action.data.id,
+        month: action.data.month,
+        user_name: action.data.user_name,
+        year: action.data.year
+      };
     default:
       return state;
   }

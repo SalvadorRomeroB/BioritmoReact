@@ -4,7 +4,7 @@ import {
   created_events
 } from "../../components/API_Req/eventsApi";
 
-import { login, update_user } from "../../components/API_Req/userApi";
+import { login, update_user, new_user } from "../../components/API_Req/userApi";
 
 // FALTA REVISAR IMPLEMENTACION DE ESTO, en codigo original al crear cuenta tambien entra al reducer
 // de sign_in
@@ -14,6 +14,20 @@ export const sign_in = (email, password) => {
       const dbResult = await login(email, password);
       dispatch({
         type: "SIGN_IN",
+        data: dbResult.data
+      });
+    } catch (err) {
+      throw err;
+    }
+  };
+};
+
+export const register_user = info_user => {
+  return async dispatch => {
+    try {
+      const dbResult = await new_user(info_user);
+      dispatch({
+        type: "REGISTER_USER",
         data: dbResult.data
       });
     } catch (err) {

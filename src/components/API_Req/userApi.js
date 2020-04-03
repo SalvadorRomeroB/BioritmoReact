@@ -15,16 +15,9 @@ export const update_user = async (token, id, info_user) => {
   return response;
 };
 
-export const new_user = async () => {
+export const new_user = async info_user => {
   let info_new_user = {
-    user: {
-      email: "u@business.com",
-      password: "password",
-      user_name: "Luis",
-      year: 1998,
-      month: 4,
-      day: 22
-    }
+    user: info_user
   };
 
   const response = await axios({

@@ -62,7 +62,7 @@ const Create_event = () => {
   const classes = useStyles();
   return (
     <Layout title="Home">
-      <h1>Created Events</h1>
+      <h1>Create Event</h1>
       <TextField
         required
         id="standard-basic"
