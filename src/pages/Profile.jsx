@@ -5,7 +5,7 @@ import {
   Container,
   Grid,
   Typography,
-  TextField
+  TextField,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import TimelineIcon from "@material-ui/icons/Timeline";
@@ -21,16 +21,16 @@ import {
   get_bio_emocional,
   get_bio_intelectual,
   setDateRange,
-  makeBioList
+  makeBioList,
 } from "../components/BiorythmCalc";
 import { useDispatch, useSelector } from "react-redux";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     background: Colors.secondary,
     borderRadius: 15,
     height: 600,
-    marginTop: 20
+    marginTop: 20,
   },
   customButton: {
     transform: "scale(1.5)",
@@ -40,15 +40,15 @@ const useStyles = makeStyles(theme => ({
     marginBottom: "5%",
     backgroundColor: Colors.primary,
     "&:hover": {
-      backgroundColor: Colors.primary
-    }
+      backgroundColor: Colors.primary,
+    },
   },
   centerItem: {
-    textAlign: "center"
+    textAlign: "center",
   },
   title: {
     textAlign: "center",
-    color: Colors.white
+    color: Colors.white,
   },
 
   bioInfo: {
@@ -56,15 +56,15 @@ const useStyles = makeStyles(theme => ({
     marginBottom: "7%",
     width: "100%",
     backgroundColor: Colors.primary,
-    borderRadius: 15
-  }
+    borderRadius: 15,
+  },
 }));
 
 const Profile = () => {
   let date = new Date();
 
   const classes = useStyles();
-  let user = useSelector(state => state.user);
+  let user = useSelector((state) => state.user);
   const [token] = React.useState(localStorage.getItem("jwt") || "");
 
   const [userName, setUsername] = useState(user.user_name);
@@ -77,7 +77,7 @@ const Profile = () => {
   const [data, setData] = useState({
     fisico: [],
     emocional: [],
-    intelectual: []
+    intelectual: [],
   });
   const [biorythm] = useState({
     physical: bio_fisico(
@@ -91,7 +91,7 @@ const Profile = () => {
     intelect: bio_intelectual(
       date,
       new Date(`${user.month}/${user.day}/${user.year}`)
-    )
+    ),
   });
 
   const { physical, emotional, intelect } = biorythm;
@@ -112,13 +112,13 @@ const Profile = () => {
     setData({
       fisico: makeBioList(bio_fisico, user),
       emocional: makeBioList(bio_emocional, user),
-      intelectual: makeBioList(bio_intelectual, user)
+      intelectual: makeBioList(bio_intelectual, user),
     });
 
     visible ? setVisible(false) : setVisible(true);
   };
 
-  const edit_user = e => {
+  const edit_user = (e) => {
     e.preventDefault();
     const info_user = {
       email: user.email,
@@ -126,7 +126,7 @@ const Profile = () => {
       user_name: userName,
       year: year,
       month: month,
-      day: day
+      day: day,
     };
     let newUser = update_user(token, user.id, info_user);
     setUsername(newUser.user_name);
@@ -211,37 +211,37 @@ const Profile = () => {
         label="Location"
         variant="filled"
         value={userName}
-        onChange={e => setUsername(e.target.value)}
+        onChange={(e) => setUsername(e.target.value)}
       />
       <TextField
         id="standard-number"
         label="Year with 4 digits"
         type="number"
         InputLabelProps={{
-          shrink: true
+          shrink: true,
         }}
         value={year}
-        onChange={e => setYear(e.target.value)}
+        onChange={(e) => setYear(e.target.value)}
       />
       <TextField
         id="standard-number"
         label="Month"
         type="number"
         InputLabelProps={{
-          shrink: true
+          shrink: true,
         }}
         value={month}
-        onChange={e => setMonth(e.target.value)}
+        onChange={(e) => setMonth(e.target.value)}
       />
       <TextField
         id="standard-number"
         label="Day with number"
         type="number"
         InputLabelProps={{
-          shrink: true
+          shrink: true,
         }}
         value={day}
-        onChange={e => setDay(e.target.value)}
+        onChange={(e) => setDay(e.target.value)}
       />
       <Button
         disabled={
@@ -251,7 +251,7 @@ const Profile = () => {
         variant="outlined"
         size="large"
         className={classes.formButton}
-        onClick={e => edit_user(e)}
+        onClick={(e) => edit_user(e)}
       >
         Save User
       </Button>

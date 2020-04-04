@@ -10,21 +10,21 @@ import Layout from "../components/Layout";
 import Colors from "../constants/Colors";
 import FileBase64 from "react-file-base64";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   title: {
     textAlign: "center",
-    padding: 50
+    padding: 50,
   },
   root: {
     background: Colors.three,
     borderRadius: 15,
     height: 600,
-    marginTop: 20
+    marginTop: 20,
   },
   form: {
     marginTop: 10,
-    textAlign: "center"
-  }
+    textAlign: "center",
+  },
 }));
 
 const Signin = () => {
@@ -37,7 +37,7 @@ const Signin = () => {
   const [day, setDay] = useState(0);
   const [image, setImage] = useState("");
 
-  const handleLogin = e => {
+  const handleLogin = (e) => {
     e.preventDefault();
     let info_user = {
       email: email,
@@ -46,7 +46,7 @@ const Signin = () => {
       year: year,
       month: month,
       day: day,
-      image: image
+      image: image,
     };
     dispatch(register_user(info_user));
     setEmail("");
@@ -57,8 +57,13 @@ const Signin = () => {
     setDay(0);
   };
 
-  const getFiles = file => {
-    setImage(file.base64.replace("data:image/png;base64,", ""));
+  const getFiles = (file) => {
+    setImage(
+      file.base64
+        .replace("data:image/png;base64,", "")
+        .replace("data:image/jpg;base64,", "")
+        .replace("data:image/jpeg;base64,", "")
+    );
   };
 
   const classes = useStyles();
@@ -77,7 +82,7 @@ const Signin = () => {
               label="Email"
               variant="filled"
               value={email}
-              onChange={e => setEmail(e.target.value)}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </Grid>
           <Grid item xs={12}>
@@ -88,7 +93,7 @@ const Signin = () => {
               type="password"
               variant="filled"
               value={password}
-              onChange={e => setPassword(e.target.value)}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </Grid>
           <Grid item xs={12}>
@@ -98,7 +103,7 @@ const Signin = () => {
               label="User Name"
               variant="filled"
               value={userName}
-              onChange={e => setUsername(e.target.value)}
+              onChange={(e) => setUsername(e.target.value)}
             />
           </Grid>
           <Grid item xs={12}>
@@ -107,10 +112,10 @@ const Signin = () => {
               label="Year with 4 digits"
               type="number"
               InputLabelProps={{
-                shrink: true
+                shrink: true,
               }}
               value={year}
-              onChange={e => setYear(e.target.value)}
+              onChange={(e) => setYear(e.target.value)}
             />
           </Grid>
           <Grid item xs={12}>
@@ -119,10 +124,10 @@ const Signin = () => {
               label="Month"
               type="number"
               InputLabelProps={{
-                shrink: true
+                shrink: true,
               }}
               value={month}
-              onChange={e => setMonth(e.target.value)}
+              onChange={(e) => setMonth(e.target.value)}
             />
           </Grid>
           <Grid item xs={12}>
@@ -131,10 +136,10 @@ const Signin = () => {
               label="Day with number"
               type="number"
               InputLabelProps={{
-                shrink: true
+                shrink: true,
               }}
               value={day}
-              onChange={e => setDay(e.target.value)}
+              onChange={(e) => setDay(e.target.value)}
             />
           </Grid>
           <FileBase64 onDone={getFiles.bind(this)} />
@@ -147,7 +152,7 @@ const Signin = () => {
               variant="outlined"
               size="large"
               className={classes.formButton}
-              onClick={e => handleLogin(e)}
+              onClick={(e) => handleLogin(e)}
             >
               Register
             </Button>
