@@ -11,36 +11,36 @@ import Layout from "../components/Layout";
 import {
   new_event,
   add_my_events,
-  update_created_events
+  update_created_events,
 } from "../components/API_Req/eventsApi";
 import { new_user } from "../components/API_Req/userApi";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   title: {
     textAlign: "center",
-    padding: 50
+    padding: 50,
   },
   root: {
     background: Colors.three,
     borderRadius: 15,
     height: 600,
-    marginTop: 20
+    marginTop: 20,
   },
   form: {
     marginTop: 10,
-    textAlign: "center"
-  }
+    textAlign: "center",
+  },
 }));
 
 const Home = () => {
   const dispatch = useDispatch();
   const [token] = React.useState(localStorage.getItem("jwt") || "");
-  let user = useSelector(state => state.user);
+  let user = useSelector((state) => state.user);
   const [image, setImage] = useState("");
 
   const classes = useStyles();
 
-  const getFiles = file => {
+  const getFiles = (file) => {
     console.log(file);
     file.base64.replace("data:image/png;base64,", "");
     setImage(file.base64.replace("data:image/png;base64,", ""));
@@ -48,8 +48,6 @@ const Home = () => {
   return (
     <Layout title="Home">
       <h1>Home</h1>
-      <img src={`data:image/jpeg;base64,${image}`} />
-      <FileBase64 onDone={getFiles.bind(this)} />
       <Button
         variant="outlined"
         size="large"

@@ -1,12 +1,12 @@
 const user = (
   state = {
-    day: 22,
-    email: "user@gmail.com",
-    id: 14,
-    month: 4,
-    user_name: "userTest",
-    year: 1998,
-    image: ""
+    day: 0,
+    email: "",
+    id: 0,
+    month: 0,
+    user_name: "",
+    year: 0,
+    image: "",
   },
   action
 ) => {
@@ -19,7 +19,7 @@ const user = (
         month: action.data.month,
         user_name: action.data.user_name,
         year: action.data.year,
-        image: action.data.image
+        image: action.data.image,
       };
     case "UPDATE_USER":
       return {
@@ -29,7 +29,7 @@ const user = (
         month: action.data.month,
         user_name: action.data.user_name,
         year: action.data.year,
-        image: action.data.image
+        image: action.data.image,
       };
     case "REGISTER_USER":
       return {
@@ -39,7 +39,7 @@ const user = (
         month: action.data.month,
         user_name: action.data.user_name,
         year: action.data.year,
-        image: action.data.image
+        image: action.data.image,
       };
     default:
       return state;
