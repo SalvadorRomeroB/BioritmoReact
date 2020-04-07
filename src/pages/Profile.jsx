@@ -17,13 +17,10 @@ import {
   bio_fisico,
   bio_emocional,
   bio_intelectual,
-  get_bio_fisico,
-  get_bio_emocional,
-  get_bio_intelectual,
   setDateRange,
   makeBioList,
 } from "../components/BiorythmCalc";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -58,6 +55,13 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: Colors.primary,
     borderRadius: 15,
   },
+  imageStyle: {
+    flex: 1,
+    width: 100,
+    height: 100,
+    resizeMode: "contain",
+  }
+
 }));
 
 const Profile = () => {
@@ -79,6 +83,7 @@ const Profile = () => {
     emocional: [],
     intelectual: [],
   });
+
   const [biorythm] = useState({
     physical: bio_fisico(
       date,
@@ -98,16 +103,6 @@ const Profile = () => {
   const { fisico, emocional, intelectual } = data;
 
   const handleClick = () => {
-    console.log(
-      get_bio_fisico(
-        date.getFullYear(),
-        date.getMonth(),
-        date.getDay(),
-        user.month,
-        user.day,
-        user.year
-      )
-    );
     setDates(setDateRange());
     setData({
       fisico: makeBioList(bio_fisico, user),
@@ -171,13 +166,7 @@ const Profile = () => {
             </Paper>
           </Grid>
           <Grid item md={1} />
-          <Grid
-            item
-            xs={12}
-            md={7}
-            className={classes.centerItem}
-            direction="row"
-          >
+          <Grid item xs={12} md={7} className={classes.centerItem}>
             <Button
               variant="contained"
               color="default"
@@ -204,58 +193,61 @@ const Profile = () => {
             </Grid>
           </Grid>
         </Grid>
+
+        <TextField
+          required
+          id="standard-basic"
+          label="Username"
+          value={userName}
+          onChange={(e) => setUsername(e.target.value)}
+        />
+        <TextField
+          id="standard-number"
+          label="Year with 4 digits"
+          type="number"
+          InputLabelProps={{
+            shrink: true,
+          }}
+          value={year}
+          onChange={(e) => setYear(e.target.value)}
+        />
+        <TextField
+          id="standard-number"
+          label="Month"
+          type="number"
+          InputLabelProps={{
+            shrink: true,
+          }}
+          value={month}
+          onChange={(e) => setMonth(e.target.value)}
+        />
+        <TextField
+          id="standard-number"
+          label="Day with number"
+          type="number"
+          InputLabelProps={{
+            shrink: true,
+          }}
+          value={day}
+          onChange={(e) => setDay(e.target.value)}
+        />
+        <Button
+          disabled={
+            (userName !== "" ? false : true) &&
+            ((year && month && day) !== 0 ? false : true)
+          }
+          variant="outlined"
+          size="large"
+          className={classes.formButton}
+          onClick={(e) => edit_user(e)}
+        >
+          Save User
+        </Button>
+        <img
+          className={classes.imageStyle}
+          src={`data:image/jpeg;base64,${user.image}`}
+        />
       </Container>
-      <TextField
-        required
-        id="standard-basic"
-        label="Location"
-        variant="filled"
-        value={userName}
-        onChange={(e) => setUsername(e.target.value)}
-      />
-      <TextField
-        id="standard-number"
-        label="Year with 4 digits"
-        type="number"
-        InputLabelProps={{
-          shrink: true,
-        }}
-        value={year}
-        onChange={(e) => setYear(e.target.value)}
-      />
-      <TextField
-        id="standard-number"
-        label="Month"
-        type="number"
-        InputLabelProps={{
-          shrink: true,
-        }}
-        value={month}
-        onChange={(e) => setMonth(e.target.value)}
-      />
-      <TextField
-        id="standard-number"
-        label="Day with number"
-        type="number"
-        InputLabelProps={{
-          shrink: true,
-        }}
-        value={day}
-        onChange={(e) => setDay(e.target.value)}
-      />
-      <Button
-        disabled={
-          (userName !== "" ? false : true) &&
-          ((year && month && day) !== 0 ? false : true)
-        }
-        variant="outlined"
-        size="large"
-        className={classes.formButton}
-        onClick={(e) => edit_user(e)}
-      >
-        Save User
-      </Button>
-      <img src={`data:image/jpeg;base64,${user.image}`} />
     </Layout>
   );
 };
