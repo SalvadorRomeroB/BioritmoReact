@@ -6,7 +6,7 @@ import {
   Typography,
   IconButton,
   MenuItem,
-  Menu
+  Menu,
 } from "@material-ui/core";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import { Link } from "react-router-dom";
@@ -16,15 +16,15 @@ import Colors from "../constants/Colors";
 const useStyles = makeStyles({
   title: {
     flexGrow: 1,
-    textDecoration: "none"
+    textDecoration: "none",
   },
   navbar: {
-    backgroundColor: Colors.primary
+    backgroundColor: Colors.primary,
   },
   noline: {
     textDecoration: "none",
-    color: Colors.white
-  }
+    color: Colors.white,
+  },
 });
 
 const Navbar = () => {
@@ -32,7 +32,7 @@ const Navbar = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 
-  const handleMenu = event => {
+  const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
@@ -50,13 +50,8 @@ const Navbar = () => {
       <AppBar position="static" className={classes.navbar}>
         <Toolbar>
           <Typography variant="h5" className={classes.title}>
-            <Link className={classes.noline} to="/">
-              Biorithm
-            </Link>
-          </Typography>
-          <Typography variant="h5" className={classes.title}>
             <Link className={classes.noline} to="/all-events">
-              All Events
+              Biorithm
             </Link>
           </Typography>
           <Typography variant="h5" className={classes.title}>
@@ -67,11 +62,6 @@ const Navbar = () => {
           <Typography variant="h5" className={classes.title}>
             <Link className={classes.noline} to="/created-events">
               Created Events
-            </Link>
-          </Typography>
-          <Typography variant="h5" className={classes.title}>
-            <Link className={classes.noline} to="/edit-event">
-              Edit Event
             </Link>
           </Typography>
           <Typography variant="h5" className={classes.title}>
@@ -93,12 +83,12 @@ const Navbar = () => {
             anchorEl={anchorEl}
             anchorOrigin={{
               vertical: "top",
-              horizontal: "right"
+              horizontal: "right",
             }}
             keepMounted
             transformOrigin={{
               vertical: "top",
-              horizontal: "right"
+              horizontal: "right",
             }}
             open={open}
             onClose={handleClose}
