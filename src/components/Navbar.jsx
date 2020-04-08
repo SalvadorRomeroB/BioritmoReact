@@ -23,7 +23,7 @@ const useStyles = makeStyles({
   },
   noline: {
     textDecoration: "none",
-    color: Colors.white,
+    color: Colors.green,
   },
 });
 

@@ -1,44 +1,63 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   TextField,
   Select,
   MenuItem,
   FormControl,
   InputLabel,
-  FormHelperText,
-  Button
+  Button,
+  Grid,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { update_created_events } from "../components/API_Req/eventsApi";
+
+import "date-fns";
+import DateFnsUtils from "@date-io/date-fns";
 import {
-  get_bio_fisico,
-  get_bio_emocional,
-  get_bio_intelectual
-} from "../components/BiorythmCalc";
+  MuiPickersUtilsProvider,
+  KeyboardDatePicker,
+} from "@material-ui/pickers";
 
 import Layout from "../components/Layout";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   event: {
-    paddingBottom: 3
-  }
+    paddingBottom: 3,
+  },
+  inputFields: {
+    minWidth: 350,
+    margin: "1%",
+  },
+  specialInput: {
+    minWidth: 300,
+    margin: "1%",
+  },
+  formButton: {
+    marginTop: 10,
+  },
 }));
 
 const Create_event = () => {
-  const dispatch = useDispatch();
   const [token] = React.useState(localStorage.getItem("jwt") || "");
-  let user = useSelector(state => state.user);
-  let selected_event = useSelector(state => state.selected_event);
+  let user = useSelector((state) => state.user);
+  let selected_event = useSelector((state) => state.selected_event);
   const [name, setName] = useState(selected_event.name);
   const [description, setDescription] = useState(selected_event.description);
   const [tag, setTag] = useState(selected_event.tag);
   const [location, setLocation] = useState(selected_event.location);
-  const [year, setYear] = useState(selected_event.year);
-  const [month, setMonth] = useState(selected_event.month);
-  const [day, setDay] = useState(selected_event.day);
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [year, setYear] = useState(selectedDate.getFullYear());
+  const [month, setMonth] = useState(selectedDate.getMonth());
+  const [day, setDay] = useState(selectedDate.getDate());
 
-  const create_event = e => {
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+    setDay(selectedDate.getDate());
+    setMonth(selectedDate.getMonth());
+    setYear(selectedDate.getFullYear());
+  };
+  const create_event = (e) => {
     e.preventDefault();
     const event = {
       name: name,
@@ -48,7 +67,7 @@ const Create_event = () => {
       year: year,
       month: month,
       day: day,
-      owner: user.id
+      owner: user.id,
     };
     update_created_events(token, selected_event.id, event);
     setName("");
@@ -60,105 +79,95 @@ const Create_event = () => {
     setDay(0);
   };
 
+  const form = () => (
+    <>
+      <Grid container direction="row" justify="center">
+        <Grid item xs={12} md={12}>
+          <TextField
+            className={classes.inputFields}
+            required
+            label="Name of the event"
+            variant="filled"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+
+          <TextField
+            className={classes.inputFields}
+            required
+            id="standard-basic"
+            label="Location of the event"
+            variant="filled"
+            value={location}
+            onChange={(e) => setLocation(e.target.value)}
+          />
+        </Grid>
+      </Grid>
+      <Grid container direction="row" justify="center">
+        <Grid item xs={12} md={6}>
+          <TextField
+            className={classes.inputFields}
+            required
+            label="Description"
+            variant="filled"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            multiline
+            rows="4"
+          />
+        </Grid>
+        <Grid item xs={10} md={6}>
+          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <KeyboardDatePicker
+              className={classes.specialInput}
+              margin="normal"
+              id="date-picker-dialog"
+              label="Date picker dialog"
+              format="MM/dd/yyyy"
+              value={selectedDate}
+              onChange={handleDateChange}
+              KeyboardButtonProps={{
+                "aria-label": "change date",
+              }}
+            />
+          </MuiPickersUtilsProvider>
+          <FormControl required className={classes.specialInput}>
+            <InputLabel>Tag</InputLabel>
+            <Select value={tag} onChange={(e) => setTag(e.target.value)}>
+              <MenuItem value={"FISICO"}>PHYSICAL</MenuItem>
+              <MenuItem value={"EMOCIONAL"}>EMOTIONAL</MenuItem>
+              <MenuItem value={"INTELECTUAL"}>INTELECTUAL</MenuItem>
+            </Select>
+          </FormControl>
+        </Grid>
+      </Grid>
+
+      <Grid container justify="center">
+        <Button
+          disabled={
+            ((name && description && tag && tag) !== "" ? false : true) &&
+            ((year && month && day) !== 0 ? false : true)
+          }
+          variant="outlined"
+          size="large"
+          className={classes.formButton}
+          onClick={(e) => create_event(e)}
+        >
+          Create Event
+        </Button>
+      </Grid>
+    </>
+  );
   const classes = useStyles();
   return (
     <Layout title="Home">
-      <h1>Created Events</h1>
-      <TextField
-        required
-        id="standard-basic"
-        label="Name of the Events"
-        variant="filled"
-        value={name}
-        onChange={e => setName(e.target.value)}
-      />
-      <TextField
-        required
-        id="standard-textarea"
-        label="Description"
-        variant="filled"
-        value={description}
-        onChange={e => setDescription(e.target.value)}
-        multiline
-        rows="4"
-      />
-      <TextField
-        required
-        id="standard-basic"
-        label="Location"
-        variant="filled"
-        value={location}
-        onChange={e => setLocation(e.target.value)}
-      />
-      <FormControl required className={classes.formControl}>
-        <InputLabel id="demo-simple-select-required-label">Age</InputLabel>
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={tag}
-          onChange={e => setTag(e.target.value)}
-        >
-          <MenuItem value={"FISICO"}>FISICO</MenuItem>
-          <MenuItem value={"EMOCIONAL"}>EMOCIONAL</MenuItem>
-          <MenuItem value={"INTELECTUAL"}>INTELECTUAL</MenuItem>
-        </Select>
-        <FormHelperText>Required</FormHelperText>
-      </FormControl>
-      <TextField
-        id="standard-number"
-        label="Year with 4 digits"
-        type="number"
-        InputLabelProps={{
-          shrink: true
-        }}
-        value={year}
-        onChange={e => setYear(e.target.value)}
-      />
-      <TextField
-        id="standard-number"
-        label="Month"
-        type="number"
-        InputLabelProps={{
-          shrink: true
-        }}
-        value={month}
-        onChange={e => setMonth(e.target.value)}
-      />
-      <TextField
-        id="standard-number"
-        label="Day with number"
-        type="number"
-        InputLabelProps={{
-          shrink: true
-        }}
-        value={day}
-        onChange={e => setDay(e.target.value)}
-      />
-      <Button
-        disabled={
-          ((name && description && tag && tag) !== "" ? false : true) &&
-          ((year && month && day) !== 0 ? false : true)
-        }
-        variant="outlined"
-        size="large"
-        className={classes.formButton}
-        onClick={e => create_event(e)}
-      >
-        Save Event
-      </Button>
-      <p>Datos para el dia del evento</p>
-      <p>
-        Fisico:{" "}
-        {get_bio_fisico(year, month, day, user.month, user.day, user.year)}
-      </p>
-      <p>
-        Emocional:{" "}
-        {get_bio_emocional(year, month, day, user.month, user.day, user.year)}
-      </p>
-      <p>
-        Intelectual:
-        {get_bio_intelectual(year, month, day, user.month, user.day, user.year)}
-      </p>
+      <Grid container justify="center">
+        <Grid item md={2} />
+        <Grid item xs={12} md={8}>
+          {form()}
+        </Grid>
+        <Grid item md={2} />
+      </Grid>
     </Layout>
   );
 };

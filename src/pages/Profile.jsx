@@ -172,7 +172,6 @@ const Profile = () => {
               className={classes.button}
               startIcon={<TimelineIcon />}
               onClick={() => handleClick()}
-              className={classes.customButton}
             >
               {visible ? "Hide Graph" : "Check biorythm graph"}
             </Button>
@@ -243,6 +242,7 @@ const Profile = () => {
           Save User
         </Button>
         <img
+          alt=""
           className={classes.imageStyle}
           src={`data:image/jpeg;base64,${user.image}`}
         />

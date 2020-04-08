@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "date-fns";
 import {
   TextField,
   Select,
@@ -9,6 +8,7 @@ import {
   Button,
   Grid,
 } from "@material-ui/core";
+import "date-fns";
 import DateFnsUtils from "@date-io/date-fns";
 import {
   MuiPickersUtilsProvider,
@@ -17,11 +17,6 @@ import {
 import { makeStyles } from "@material-ui/core/styles";
 import { useSelector } from "react-redux";
 import { new_event } from "../components/API_Req/eventsApi";
-import {
-  get_bio_fisico,
-  get_bio_emocional,
-  get_bio_intelectual,
-} from "../components/BiorythmCalc";
 
 import Layout from "../components/Layout";
 
@@ -43,20 +38,23 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Create_event = () => {
+  let user = useSelector((state) => state.user);
   const classes = useStyles();
   const [token] = React.useState(localStorage.getItem("jwt") || "");
-  let user = useSelector((state) => state.user);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [tag, setTag] = useState("");
   const [location, setLocation] = useState("");
-  const [year, setYear] = useState(0);
-  const [month, setMonth] = useState(0);
-  const [day, setDay] = useState(0);
   const [selectedDate, setSelectedDate] = useState(new Date());
+  const [year, setYear] = useState(selectedDate.getFullYear());
+  const [month, setMonth] = useState(selectedDate.getMonth());
+  const [day, setDay] = useState(selectedDate.getDate());
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
+    setDay(selectedDate.getDate());
+    setMonth(selectedDate.getMonth());
+    setYear(selectedDate.getFullYear());
   };
   const create_event = (e) => {
     e.preventDefault();
@@ -169,60 +167,8 @@ const Create_event = () => {
         </Grid>
         <Grid item md={2} />
       </Grid>
-      <p>Datos para el dia del evento</p>
-      <p>
-        Fisico:{" "}
-        {get_bio_fisico(year, month, day, user.month, user.day, user.year)}
-      </p>
-      <p>
-        Emocional:{" "}
-        {get_bio_emocional(year, month, day, user.month, user.day, user.year)}
-      </p>
-      <p>
-        Intelectual:
-        {get_bio_intelectual(year, month, day, user.month, user.day, user.year)}
-      </p>
     </Layout>
   );
 };
 
 export default Create_event;
-
-{
-  /* <Grid item xs={12} md={6}>
-              <TextField
-                id="standard-number"
-                label="Year with 4 digits"
-                type="number"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                value={year}
-                onChange={(e) => setYear(e.target.value)}
-              />
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <TextField
-                id="standard-number"
-                label="Month"
-                type="number"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                value={month}
-                onChange={(e) => setMonth(e.target.value)}
-              />
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <TextField
-                id="standard-number"
-                label="Day with number"
-                type="number"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                value={day}
-                onChange={(e) => setDay(e.target.value)}
-              />
-            </Grid> */
-}
