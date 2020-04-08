@@ -23,7 +23,7 @@ const useStyles = makeStyles({
   },
   noline: {
     textDecoration: "none",
-    color: Colors.white,
+    color: Colors.green,
   },
 });
 
@@ -59,16 +59,7 @@ const Navbar = () => {
               My Events
             </Link>
           </Typography>
-          {/* <Typography variant="h5" className={classes.title}>
-            <Link className={classes.noline} to="/created-events">
-              Created Events
-            </Link>
-          </Typography>
-          <Typography variant="h5" className={classes.title}>
-            <Link className={classes.noline} to="/new-event">
-              Create Event
-            </Link>
-          </Typography> */}
+
           <IconButton
             aria-label="account of current user"
             aria-controls="menu-appbar"
@@ -112,6 +103,16 @@ const Navbar = () => {
                 </MenuItem>
               </>
             )}
+            <MenuItem onClick={handleClose}>
+              <Link className={classes.noline} to="/created-events">
+                Created Events
+              </Link>
+            </MenuItem>
+            <MenuItem onClick={handleClose}>
+              <Link className={classes.noline} to="/new-event">
+                Create Event
+              </Link>
+            </MenuItem>
           </Menu>
         </Toolbar>
       </AppBar>

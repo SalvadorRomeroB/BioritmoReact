@@ -2,13 +2,18 @@ import React, { useState } from "react";
 import { Container, Typography, TextField, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
-import axios from "axios";
 import { useDispatch } from "react-redux";
 import { register_user } from "../redux/actions/index";
 
 import Layout from "../components/Layout";
 import Colors from "../constants/Colors";
 import FileBase64 from "react-file-base64";
+import "date-fns";
+import DateFnsUtils from "@date-io/date-fns";
+import {
+  MuiPickersUtilsProvider,
+  KeyboardDatePicker,
+} from "@material-ui/pickers";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -18,12 +23,15 @@ const useStyles = makeStyles((theme) => ({
   root: {
     background: Colors.three,
     borderRadius: 15,
-    height: 600,
+    maxHeight: 800,
     marginTop: 20,
   },
   form: {
     marginTop: 10,
     textAlign: "center",
+  },
+  invisible: {
+    display: "none",
   },
 }));
 
@@ -32,10 +40,18 @@ const Signin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [userName, setUsername] = useState("");
-  const [year, setYear] = useState(0);
-  const [month, setMonth] = useState(0);
-  const [day, setDay] = useState(0);
   const [image, setImage] = useState("");
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [year, setYear] = useState(selectedDate.getFullYear());
+  const [month, setMonth] = useState(selectedDate.getMonth());
+  const [day, setDay] = useState(selectedDate.getDate());
+
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+    setDay(selectedDate.getDate());
+    setMonth(selectedDate.getMonth());
+    setYear(selectedDate.getFullYear());
+  };
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -48,6 +64,7 @@ const Signin = () => {
       day: day,
       image: image,
     };
+
     dispatch(register_user(info_user));
     setEmail("");
     setPassword("");
@@ -107,42 +124,29 @@ const Signin = () => {
             />
           </Grid>
           <Grid item xs={12}>
-            <TextField
-              id="standard-number"
-              label="Year with 4 digits"
-              type="number"
-              InputLabelProps={{
-                shrink: true,
-              }}
-              value={year}
-              onChange={(e) => setYear(e.target.value)}
-            />
+            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+              <KeyboardDatePicker
+                className={classes.specialInput}
+                margin="normal"
+                id="date-picker-dialog"
+                label="Date picker dialog"
+                format="MM/dd/yyyy"
+                value={selectedDate}
+                onChange={handleDateChange}
+                KeyboardButtonProps={{
+                  "aria-label": "change date",
+                }}
+              />
+            </MuiPickersUtilsProvider>
           </Grid>
           <Grid item xs={12}>
-            <TextField
-              id="standard-number"
-              label="Month"
-              type="number"
-              InputLabelProps={{
-                shrink: true,
-              }}
-              value={month}
-              onChange={(e) => setMonth(e.target.value)}
-            />
+            <Button variant="outlined" component="label">
+              Upload File
+              <div className={classes.invisible}>
+                <FileBase64 onDone={getFiles.bind(this)} />
+              </div>
+            </Button>
           </Grid>
-          <Grid item xs={12}>
-            <TextField
-              id="standard-number"
-              label="Day with number"
-              type="number"
-              InputLabelProps={{
-                shrink: true,
-              }}
-              value={day}
-              onChange={(e) => setDay(e.target.value)}
-            />
-          </Grid>
-          <FileBase64 onDone={getFiles.bind(this)} />
           <Grid item xs={12}>
             <Button
               disabled={

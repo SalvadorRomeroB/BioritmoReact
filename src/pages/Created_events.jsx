@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { Button } from "@material-ui/core";
+import React, { useEffect } from "react";
+import { Button, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from "react-redux";
 import { get_created_events, select_event } from "../redux/actions/index";
+import EventCard from "../components/EventCard";
 import { Link } from "react-router-dom";
 
 import {
@@ -31,7 +32,7 @@ const Created_events = () => {
 
   useEffect(() => {
     dispatch(get_created_events(token, user.id));
-  }, [dispatch]);
+  }, [dispatch, token, user.id]);
 
   const add_event_to_my_events = (e, event) => {
     e.preventDefault();
@@ -39,52 +40,39 @@ const Created_events = () => {
   };
 
   const classes = useStyles();
-  return (
-    <Layout title="Home">
-      <h1>Created Events</h1>
-      {eventsList.map((event, i) => (
-        <div key={i} className={classes.event}>
-          <div>
-            <h1>{event.name}</h1>
-            <p>id: {event.id}</p>
-            <p>{event.description}</p>
-            <p>
-              Fecha del evento: {event.day}/{event.month}/{event.year}
-            </p>
-            <p>
-              Fisico:{" "}
-              {get_bio_fisico(
-                event.year,
-                event.month,
-                event.day,
-                user.month,
-                user.day,
-                user.year
-              )}
-            </p>
-            <p>
-              Emocional:{" "}
-              {get_bio_emocional(
-                event.year,
-                event.month,
-                event.day,
-                user.month,
-                user.day,
-                user.year
-              )}
-            </p>
-            <p>
-              Intelectual:
-              {get_bio_intelectual(
-                event.year,
-                event.month,
-                event.day,
-                user.month,
-                user.day,
-                user.year
-              )}
-            </p>
-          </div>
+
+  const displayAll = () => (
+    <>
+      {eventsList.map((event) => (
+        <EventCard
+          title={event.name}
+          description={event.description}
+          fisico={get_bio_fisico(
+            event.year,
+            event.month,
+            event.day,
+            user.month,
+            user.day,
+            user.year
+          )}
+          emocional={get_bio_emocional(
+            event.year,
+            event.month,
+            event.day,
+            user.month,
+            user.day,
+            user.year
+          )}
+          intelectual={get_bio_intelectual(
+            event.year,
+            event.month,
+            event.day,
+            user.month,
+            user.day,
+            user.year
+          )}
+          fecha={`${event.day}/${event.month}/${event.year}`}
+        >
           <Button
             variant="outlined"
             size="large"
@@ -95,8 +83,18 @@ const Created_events = () => {
               Edit Event
             </Link>
           </Button>
-        </div>
+        </EventCard>
       ))}
+    </>
+  );
+
+  return (
+    <Layout title={`Events Created by ${user.user_name}`}>
+      <Grid container spacing={0}>
+        <Grid item xs={12} md={12} className={classes.center}>
+          {displayAll()}
+        </Grid>
+      </Grid>
     </Layout>
   );
 };
