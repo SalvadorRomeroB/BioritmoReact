@@ -21,12 +21,18 @@ import {
   makeBioList,
 } from "../components/BiorythmCalc";
 import { useSelector } from "react-redux";
+import "date-fns";
+import DateFnsUtils from "@date-io/date-fns";
+import {
+  MuiPickersUtilsProvider,
+  KeyboardDatePicker,
+} from "@material-ui/pickers";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     background: Colors.secondary,
     borderRadius: 15,
-    height: 600,
+    minHeight: 600,
     marginTop: 20,
   },
   customButton: {
@@ -61,6 +67,16 @@ const useStyles = makeStyles((theme) => ({
     height: 100,
     resizeMode: "contain",
   },
+  inputName: {
+    width: 150,
+    margin: "5%",
+  },
+  specialInput: {
+    width: 260,
+  },
+  formButton: {
+    margin: "5%",
+  },
 }));
 
 const Profile = () => {
@@ -69,12 +85,7 @@ const Profile = () => {
   const classes = useStyles();
   let user = useSelector((state) => state.user);
   const [token] = React.useState(localStorage.getItem("jwt") || "");
-
   const [userName, setUsername] = useState(user.user_name);
-  const [year, setYear] = useState(user.year);
-  const [month, setMonth] = useState(user.month);
-  const [day, setDay] = useState(user.day);
-
   const [dates, setDates] = useState([]);
   const [visible, setVisible] = useState(false);
   const [data, setData] = useState({
@@ -82,7 +93,19 @@ const Profile = () => {
     emocional: [],
     intelectual: [],
   });
+  const [selectedDate, setSelectedDate] = useState(
+    new Date(user.year, user.month - 1, user.day)
+  );
+  const [year, setYear] = useState(user.year);
+  const [month, setMonth] = useState(user.month);
+  const [day, setDay] = useState(user.day);
 
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+    setDay(date.getDate());
+    setMonth(date.getMonth() + 1);
+    setYear(date.getFullYear());
+  };
   const [biorythm] = useState({
     physical: bio_fisico(
       date,
@@ -132,7 +155,7 @@ const Profile = () => {
   return (
     <Layout title="Profile">
       <Container maxWidth="md" className={classes.root}>
-        <Grid container direction="row">
+        <Grid container direction="row" spacing={2}>
           <Grid item xs={12} md={4}>
             <Paper elevation={6} className={classes.bioInfo}>
               <Typography gutterBottom variant="h4" className={classes.title}>
@@ -163,6 +186,50 @@ const Profile = () => {
                 </Typography>
               </Paper>
             </Paper>
+            <Grid item>
+              <Paper className={classes.centerItem}>
+                <img
+                  alt=""
+                  className={classes.imageStyle}
+                  src={`data:image/jpeg;base64,${user.image}`}
+                />
+                <TextField
+                  className={classes.inputName}
+                  required
+                  id="standard-basic"
+                  label="Username"
+                  value={userName}
+                  defaultValue={userName}
+                  onChange={(e) => setUsername(e.target.value)}
+                />
+                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                  <KeyboardDatePicker
+                    className={classes.specialInput}
+                    margin="normal"
+                    id="date-picker-dialog"
+                    label="Birth Date"
+                    format="MM/dd/yyyy"
+                    value={selectedDate}
+                    onChange={handleDateChange}
+                    KeyboardButtonProps={{
+                      "aria-label": "change date",
+                    }}
+                  />
+                </MuiPickersUtilsProvider>
+                <Button
+                  disabled={
+                    (userName !== "" ? false : true) &&
+                    ((year && month && day) !== 0 ? false : true)
+                  }
+                  variant="outlined"
+                  size="large"
+                  className={classes.formButton}
+                  onClick={(e) => edit_user(e)}
+                >
+                  Save User
+                </Button>
+              </Paper>
+            </Grid>
           </Grid>
           <Grid item md={1} />
           <Grid item xs={12} md={7} className={classes.centerItem}>
@@ -175,6 +242,7 @@ const Profile = () => {
             >
               {visible ? "Hide Graph" : "Check biorythm graph"}
             </Button>
+
             <Grid item xs={12} md={11}>
               <Paper elevation={6}>
                 {visible ? (
@@ -191,61 +259,6 @@ const Profile = () => {
             </Grid>
           </Grid>
         </Grid>
-
-        <TextField
-          required
-          id="standard-basic"
-          label="Username"
-          value={userName}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-        <TextField
-          id="standard-number"
-          label="Year with 4 digits"
-          type="number"
-          InputLabelProps={{
-            shrink: true,
-          }}
-          value={year}
-          onChange={(e) => setYear(e.target.value)}
-        />
-        <TextField
-          id="standard-number"
-          label="Month"
-          type="number"
-          InputLabelProps={{
-            shrink: true,
-          }}
-          value={month}
-          onChange={(e) => setMonth(e.target.value)}
-        />
-        <TextField
-          id="standard-number"
-          label="Day with number"
-          type="number"
-          InputLabelProps={{
-            shrink: true,
-          }}
-          value={day}
-          onChange={(e) => setDay(e.target.value)}
-        />
-        <Button
-          disabled={
-            (userName !== "" ? false : true) &&
-            ((year && month && day) !== 0 ? false : true)
-          }
-          variant="outlined"
-          size="large"
-          className={classes.formButton}
-          onClick={(e) => edit_user(e)}
-        >
-          Save User
-        </Button>
-        <img
-          alt=""
-          className={classes.imageStyle}
-          src={`data:image/jpeg;base64,${user.image}`}
-        />
       </Container>
     </Layout>
   );
