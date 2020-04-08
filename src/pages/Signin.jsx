@@ -1,5 +1,11 @@
 import React, { useState } from "react";
-import { Container, Typography, TextField, Button } from "@material-ui/core";
+import {
+  Container,
+  Typography,
+  TextField,
+  Button,
+  SnackbarContent,
+} from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import { useDispatch } from "react-redux";
@@ -40,6 +46,8 @@ const Signin = () => {
     redirectUsr: false,
   });
 
+  const [open, setOpen] = useState(false);
+
   const { email, password, redirectUsr } = values;
 
   const handleChange = (input) => (event) => {
@@ -49,12 +57,18 @@ const Signin = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     dispatch(sign_in(email, password));
-    const data = await login(email, password);
-    authenticate(data, () => {
-      if (isAuthenticated()) {
-        setValues({ email: "", password: "", redirectUsr: true });
-      }
-    });
+    let data;
+    try {
+      data = await login(email, password);
+      authenticate(data, () => {
+        if (isAuthenticated()) {
+          setValues({ email: "", password: "", redirectUsr: true });
+        }
+      });
+      setOpen(false);
+    } catch (error) {
+      setOpen(true);
+    }
   };
 
   //FORM
@@ -97,6 +111,11 @@ const Signin = () => {
             Login
           </Button>
         </Grid>
+        {open === true && (
+          <Grid item xs={12}>
+            <SnackbarContent message="Usuario o contraseña incorrectas" />
+          </Grid>
+        )}
       </Grid>
     </div>
   );

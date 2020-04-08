@@ -146,8 +146,10 @@ const Signin = () => {
           <Grid item xs={12}>
             <Button
               disabled={
-                ((email && password && userName) !== "" ? false : true) &&
-                ((year && month && day) !== 0 ? false : true)
+                (email && password && userName) !== "" &&
+                (year && month && day) !== 0
+                  ? false
+                  : true
               }
               variant="outlined"
               size="large"

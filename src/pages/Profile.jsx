@@ -232,8 +232,7 @@ const Profile = () => {
         />
         <Button
           disabled={
-            (userName !== "" ? false : true) &&
-            ((year && month && day) !== 0 ? false : true)
+            userName !== "" && (year && month && day) !== 0 ? false : true
           }
           variant="outlined"
           size="large"
