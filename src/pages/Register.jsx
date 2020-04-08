@@ -50,9 +50,9 @@ const Signin = () => {
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
-    setDay(selectedDate.getDate());
-    setMonth(selectedDate.getMonth());
-    setYear(selectedDate.getFullYear());
+    setDay(date.getDate());
+    setMonth(date.getMonth() + 1);
+    setYear(date.getFullYear());
   };
 
   const handleLogin = (e) => {
