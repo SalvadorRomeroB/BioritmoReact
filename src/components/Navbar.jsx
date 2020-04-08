@@ -50,7 +50,7 @@ const Navbar = () => {
       <AppBar position="static" className={classes.navbar}>
         <Toolbar>
           <Typography variant="h5" className={classes.title}>
-            <Link className={classes.noline} to="/all-events">
+            <Link className={classes.noline} to="/">
               Biorithm
             </Link>
           </Typography>
@@ -59,7 +59,7 @@ const Navbar = () => {
               My Events
             </Link>
           </Typography>
-          <Typography variant="h5" className={classes.title}>
+          {/* <Typography variant="h5" className={classes.title}>
             <Link className={classes.noline} to="/created-events">
               Created Events
             </Link>
@@ -68,7 +68,7 @@ const Navbar = () => {
             <Link className={classes.noline} to="/new-event">
               Create Event
             </Link>
-          </Typography>
+          </Typography> */}
           <IconButton
             aria-label="account of current user"
             aria-controls="menu-appbar"
@@ -93,19 +93,25 @@ const Navbar = () => {
             open={open}
             onClose={handleClose}
           >
-            <MenuItem onClick={handleClose}>
-              <Link to="/signin">Signin</Link>
-            </MenuItem>
-            <MenuItem onClick={handleClose}>
-              <Link to="/register">Register</Link>
-            </MenuItem>
-            <MenuItem onClick={handleClose}>
-              <Link to="/profile">Profile</Link>
-            </MenuItem>
-            <MenuItem onClick={handleLogOut}>
-              <Link to="/signin">Logout</Link>
-            </MenuItem>
-            {/* <MenuItem onClick={handleClose}>My account</MenuItem> */}
+            {localStorage.getItem("jwt") ? (
+              <>
+                <MenuItem onClick={handleLogOut}>
+                  <Link to="/signin">Logout</Link>
+                </MenuItem>
+                <MenuItem onClick={handleClose}>
+                  <Link to="/profile">Profile</Link>
+                </MenuItem>
+              </>
+            ) : (
+              <>
+                <MenuItem onClick={handleClose}>
+                  <Link to="/signin">Signin</Link>
+                </MenuItem>
+                <MenuItem onClick={handleClose}>
+                  <Link to="/register">Register</Link>
+                </MenuItem>
+              </>
+            )}
           </Menu>
         </Toolbar>
       </AppBar>

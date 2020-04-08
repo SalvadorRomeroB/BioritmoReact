@@ -103,7 +103,7 @@ const Signin = () => {
 
   const redirectUser = () => {
     if (redirectUsr) {
-      return <Redirect to="/all-events" />;
+      return <Redirect to="/" />;
     }
   };
 
