@@ -4,9 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import { useDispatch } from "react-redux";
 import { register_user } from "../redux/actions/index";
-
-import Layout from "../components/Layout";
-import Colors from "../constants/Colors";
+import { Redirect } from "react-router-dom";
 import FileBase64 from "react-file-base64";
 import "date-fns";
 import DateFnsUtils from "@date-io/date-fns";
@@ -14,6 +12,9 @@ import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
 } from "@material-ui/pickers";
+
+import Layout from "../components/Layout";
+import Colors from "../constants/Colors";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -45,6 +46,7 @@ const Signin = () => {
   const [year, setYear] = useState(selectedDate.getFullYear());
   const [month, setMonth] = useState(selectedDate.getMonth());
   const [day, setDay] = useState(selectedDate.getDate());
+  const [redirectUsr, setRedirectUsr] = useState(false);
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
@@ -66,14 +68,14 @@ const Signin = () => {
     };
 
     dispatch(register_user(info_user));
-    setEmail("");
-    setPassword("");
-    setUsername("");
-    setYear(0);
-    setMonth(0);
-    setDay(0);
+    setRedirectUsr(true);
   };
 
+  const redirectUser = () => {
+    if (redirectUsr) {
+      return <Redirect to="/" />;
+    }
+  };
   const getFiles = (file) => {
     setImage(
       file.base64
@@ -85,84 +87,89 @@ const Signin = () => {
 
   const classes = useStyles();
 
+  const signupForm = () => (
+    <Container maxWidth="xs" className={classes.root}>
+      <Typography variant="h3" className={classes.title}>
+        Sign Up
+      </Typography>
+      <Grid container className={classes.form} spacing={3}>
+        <Grid item xs={12}>
+          <TextField
+            required
+            id="filled-required"
+            label="Email"
+            variant="filled"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            required
+            id="filled-password-input"
+            label="Password"
+            type="password"
+            variant="filled"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            required
+            id="filled-required"
+            label="User Name"
+            variant="filled"
+            value={userName}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <KeyboardDatePicker
+              className={classes.specialInput}
+              margin="normal"
+              id="date-picker-dialog"
+              label="Birth Date"
+              format="MM/dd/yyyy"
+              value={selectedDate}
+              onChange={handleDateChange}
+              KeyboardButtonProps={{
+                "aria-label": "change date",
+              }}
+            />
+          </MuiPickersUtilsProvider>
+        </Grid>
+        <Grid item xs={12}>
+          <Button variant="outlined" component="label">
+            Upload File
+            <div className={classes.invisible}>
+              <FileBase64 onDone={getFiles.bind(this)} />
+            </div>
+          </Button>
+        </Grid>
+        <Grid item xs={12}>
+          <Button
+            disabled={
+              ((email && password && userName) !== "" ? false : true) &&
+              ((year && month && day) !== 0 ? false : true)
+            }
+            variant="outlined"
+            size="large"
+            className={classes.formButton}
+            onClick={(e) => handleLogin(e)}
+          >
+            Create Account
+          </Button>
+        </Grid>
+      </Grid>
+    </Container>
+  );
+
   return (
     <Layout>
-      <Container maxWidth="xs" className={classes.root}>
-        <Typography variant="h3" className={classes.title}>
-          Register
-        </Typography>
-        <Grid container className={classes.form} spacing={3}>
-          <Grid item xs={12}>
-            <TextField
-              required
-              id="filled-required"
-              label="Email"
-              variant="filled"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              required
-              id="filled-password-input"
-              label="Password"
-              type="password"
-              variant="filled"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              required
-              id="filled-required"
-              label="User Name"
-              variant="filled"
-              value={userName}
-              onChange={(e) => setUsername(e.target.value)}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <MuiPickersUtilsProvider utils={DateFnsUtils}>
-              <KeyboardDatePicker
-                className={classes.specialInput}
-                margin="normal"
-                id="date-picker-dialog"
-                label="Date picker dialog"
-                format="MM/dd/yyyy"
-                value={selectedDate}
-                onChange={handleDateChange}
-                KeyboardButtonProps={{
-                  "aria-label": "change date",
-                }}
-              />
-            </MuiPickersUtilsProvider>
-          </Grid>
-          <Grid item xs={12}>
-            <Button variant="outlined" component="label">
-              Upload File
-              <div className={classes.invisible}>
-                <FileBase64 onDone={getFiles.bind(this)} />
-              </div>
-            </Button>
-          </Grid>
-          <Grid item xs={12}>
-            <Button
-              disabled={
-                ((email && password && userName) !== "" ? false : true) &&
-                ((year && month && day) !== 0 ? false : true)
-              }
-              variant="outlined"
-              size="large"
-              className={classes.formButton}
-              onClick={(e) => handleLogin(e)}
-            >
-              Register
-            </Button>
-          </Grid>
-        </Grid>
-      </Container>
+      {signupForm()}
+      {redirectUser()}
     </Layout>
   );
 };

@@ -121,7 +121,7 @@ const Create_event = () => {
               className={classes.specialInput}
               margin="normal"
               id="date-picker-dialog"
-              label="Date picker dialog"
+              label="Event Date"
               format="MM/dd/yyyy"
               value={selectedDate}
               onChange={handleDateChange}
