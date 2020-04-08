@@ -1,7 +1,6 @@
 import React from "react";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 
-import Home from "./pages/Home";
 import Signin from "./pages/Signin";
 import Profile from "./pages/Profile";
 import All_Events from "./pages/All_events";
@@ -11,15 +10,17 @@ import Create_Event from "./pages/Create_event";
 import Edit_Event from "./pages/Update_event";
 import Register from "./pages/Register.jsx";
 import PrivateRoute from "./components/Auth/PrivateRoute";
+import Home from "./pages/Home";
 
 const Routes = () => {
   return (
     <BrowserRouter>
       <Switch>
+        <PrivateRoute path="/" exact component={All_Events} />
+        {/* <Route path="/home" exact component={Home} /> */}
         <Route path="/signin" exact component={Signin} />
         <Route path="/register" exact component={Register} />
         <PrivateRoute path="/profile" exact component={Profile} />
-        <PrivateRoute path="/all-events" exact component={All_Events} />
         <PrivateRoute path="/my-events" exact component={My_Events} />
         <PrivateRoute path="/created-events" exact component={Created_Events} />
         <PrivateRoute path="/new-event" exact component={Create_Event} />
