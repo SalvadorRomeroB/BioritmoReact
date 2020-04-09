@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Grid, Hidden } from "@material-ui/core";
+import React, { useEffect } from "react";
+import { Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from "react-redux";
 import { get_my_events } from "../redux/actions/index";

@@ -126,11 +126,18 @@ const Signin = () => {
     }
   };
 
+  const redirectFromRegister = () => {
+    if (localStorage.getItem("jwt")) {
+      return <Redirect to="/" />;
+    }
+  };
+
   const classes = useStyles();
 
   return (
     <Layout>
       <Container maxWidth="xs" className={classes.root}>
+        {redirectFromRegister()}
         {loginForm()}
         {redirectUser()}
       </Container>
