@@ -138,8 +138,6 @@ const Profile = () => {
   const edit_user = (e) => {
     e.preventDefault();
     const info_user = {
-      email: user.email,
-      password: user.password,
       user_name: userName,
       year: year,
       month: month,
