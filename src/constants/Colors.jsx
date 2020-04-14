@@ -6,6 +6,6 @@ export default {
   white: "#e2f3f5",
   red: "#fc5185",
   green: "#17b978",
-  creme: "#e3c4a8",
+  creme: "#e2f3f5",
   grey: "#cdd5d5",
 };

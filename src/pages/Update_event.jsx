@@ -11,6 +11,7 @@ import {
 import { makeStyles } from "@material-ui/core/styles";
 import { useSelector } from "react-redux";
 import { update_created_events } from "../components/API_Req/eventsApi";
+import { Redirect } from "react-router-dom";
 
 import "date-fns";
 import DateFnsUtils from "@date-io/date-fns";
@@ -50,6 +51,7 @@ const Create_event = () => {
   const [year, setYear] = useState(selectedDate.getFullYear());
   const [month, setMonth] = useState(selectedDate.getMonth());
   const [day, setDay] = useState(selectedDate.getDate());
+  const [redirectUsr, setRedirectUsr] = useState(false);
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
@@ -77,8 +79,14 @@ const Create_event = () => {
     setYear(0);
     setMonth(0);
     setDay(0);
+    setRedirectUsr(true);
   };
 
+  const redirectUser = () => {
+    if (redirectUsr) {
+      return <Redirect to="/created-events" />;
+    }
+  };
   const form = () => (
     <>
       <Grid container direction="row" justify="center">
@@ -153,7 +161,7 @@ const Create_event = () => {
           className={classes.formButton}
           onClick={(e) => create_event(e)}
         >
-          Create Event
+          Update Event
         </Button>
       </Grid>
     </>
@@ -165,6 +173,7 @@ const Create_event = () => {
         <Grid item md={2} />
         <Grid item xs={12} md={8}>
           {form()}
+          {redirectUser()}
         </Grid>
         <Grid item md={2} />
       </Grid>
