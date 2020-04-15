@@ -22,6 +22,7 @@ const user = (
         image: action.data.image,
       };
     case "UPDATE_USER":
+      console.log("UPDATE USER MUT");
       return {
         day: action.data.day,
         email: action.data.email,

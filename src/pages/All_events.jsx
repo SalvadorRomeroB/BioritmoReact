@@ -13,8 +13,10 @@ import Carousel from "react-material-ui-carousel";
 import { Grid, Hidden } from "@material-ui/core";
 import EventCard from "../components/EventCard";
 import CarouselCard from "../components/CarouselCard";
+import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord";
 
 import Layout from "../components/Layout";
+import { InlineWrapper } from "@material-ui/pickers/wrappers/InlineWrapper";
 
 const useStyles = makeStyles({
   event: {
@@ -45,6 +47,7 @@ const All_events = () => {
     <Carousel>
       {eventsList.slice(0, 6).map((event) => (
         <CarouselCard
+          tag={event.tag}
           title={event.name}
           description={event.description}
           fisico={get_bio_fisico(
@@ -87,8 +90,29 @@ const All_events = () => {
 
   const displayAll = () => (
     <>
+      <div style={{ display: InlineWrapper }}>
+        <p>
+          <b>Fisico =</b>{" "}
+          <FiberManualRecordIcon
+            style={{ fill: "green" }}
+          ></FiberManualRecordIcon>
+        </p>
+        <p>
+          <b>Emocional =</b>{" "}
+          <FiberManualRecordIcon
+            style={{ fill: "red" }}
+          ></FiberManualRecordIcon>
+        </p>
+        <p>
+          <b>Intelectual =</b>{" "}
+          <FiberManualRecordIcon
+            style={{ fill: "yellow" }}
+          ></FiberManualRecordIcon>
+        </p>
+      </div>
       {eventsList.map((event) => (
         <EventCard
+          tag={event.tag}
           title={event.name}
           description={event.description}
           fisico={get_bio_fisico(

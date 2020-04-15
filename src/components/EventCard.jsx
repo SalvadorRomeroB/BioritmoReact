@@ -2,6 +2,7 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Typography, Grid, Paper } from "@material-ui/core";
 import ShowBio from "./ShowBio";
+import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord";
 
 import Colors from "../constants/Colors";
 
@@ -21,6 +22,7 @@ const useStyles = makeStyles((theme) => ({
 
 const EventCard = (props) => {
   const classes = useStyles();
+  console.log(props);
 
   return (
     <div className={classes.root}>
@@ -35,6 +37,22 @@ const EventCard = (props) => {
                 <Typography variant="body2" color="textSecondary">
                   Description: {props.description}
                 </Typography>
+                {props.tag == "FISICO" && (
+                  <FiberManualRecordIcon
+                    style={{ fill: "green" }}
+                  ></FiberManualRecordIcon>
+                )}
+                {props.tag == "EMOCIONAL" && (
+                  <FiberManualRecordIcon
+                    style={{ fill: "red" }}
+                  ></FiberManualRecordIcon>
+                )}
+                {props.tag == "INTELECTUAL" && (
+                  <FiberManualRecordIcon
+                    style={{ fill: "yellow" }}
+                  ></FiberManualRecordIcon>
+                )}
+
                 <ShowBio
                   fisico={props.fisico}
                   emocional={props.emocional}

@@ -9,7 +9,7 @@ import {
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import TimelineIcon from "@material-ui/icons/Timeline";
-import { update_user } from "../components/API_Req/userApi";
+import { put_new_user } from "../redux/actions/index";
 import Colors from "../constants/Colors";
 import Layout from "../components/Layout";
 import Chart from "../components/Chart";
@@ -27,6 +27,8 @@ import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
 } from "@material-ui/pickers";
+
+import { useDispatch } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -81,6 +83,8 @@ const useStyles = makeStyles((theme) => ({
 
 const Profile = () => {
   let date = new Date();
+
+  const dispatch = useDispatch();
 
   const classes = useStyles();
   let user = useSelector((state) => state.user);
@@ -143,11 +147,11 @@ const Profile = () => {
       month: month,
       day: day,
     };
-    let newUser = update_user(token, user.id, info_user);
-    setUsername(newUser.user_name);
-    setYear(newUser.year);
-    setMonth(newUser.month);
-    setDay(newUser.day);
+    dispatch(put_new_user(token, user.id, info_user));
+    // setUsername(newUser.user_name);
+    // setYear(newUser.year);
+    // setMonth(newUser.month);
+    // setDay(newUser.day);
   };
 
   return (

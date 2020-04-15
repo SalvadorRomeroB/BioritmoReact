@@ -45,6 +45,7 @@ const Created_events = () => {
     <>
       {eventsList.map((event) => (
         <EventCard
+          tag={event.tag}
           title={event.name}
           description={event.description}
           fisico={get_bio_fisico(

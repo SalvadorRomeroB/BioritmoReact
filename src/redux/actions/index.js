@@ -35,10 +35,11 @@ export const register_user = (info_user) => {
   };
 };
 
-export const put_new_user = (token, id) => {
+export const put_new_user = (token, id, info_user) => {
   return async (dispatch) => {
     try {
-      const dbResult = await update_user(token, id);
+      const dbResult = await update_user(token, id, info_user);
+      console.log("UPDATE USER ACTION");
       dispatch({
         type: "UPDATE_USER",
         data: dbResult.data,
